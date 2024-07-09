@@ -5,7 +5,29 @@ http://localhost:3000
 GET http://localhost:3000/productos
 
 ### Mostrar un producto por id
-GET http://localhost:3000/productos/5
+GET http://localhost:3000/productos/30
 
 ### Devuelve los productos que coinciden con el nombre especificado (búsqueda parcial).
 GET http://localhost:3000/productos/nombre/Desk
+
+### Crear/Agregar un nuevo producto
+POST http://localhost:3000/productos/
+Content-Type: application/json
+
+{
+  "nombre": "Auriculares Gaming",
+  "precio": 29.99,
+  "categoria": "Accesorios"
+}
+
+### Modificar el precio de un producto
+PATCH http://localhost:3000/productos/5
+Content-Type: application/json
+
+{
+  "precio": 39.99
+}
+
+### Borrar un producto
+DELETE http://localhost:3000/productos/30
+
