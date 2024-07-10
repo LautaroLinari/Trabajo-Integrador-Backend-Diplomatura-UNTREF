@@ -25,14 +25,14 @@ Antes de comenzar, asegúrate de tener instalados los siguientes componentes:
 2. **Instala las dependencias:**
 
    ```bash
-   npm install express mongoose uuidv4 mongodb 
+   npm install express mongoose 
    ```
 
 3. **Configuración de la base de datos:**
 
    - Crea una base de datos en MongoDB.
    - Configura la URI de MongoDB en el archivo `database.js`.
-   - En este caso usare el dataset de electronicos.json.
+   - En este caso usare el dataset de `computacion.json`.
 
 ## Ejecución
 
@@ -46,48 +46,51 @@ Esto iniciará el servidor Express en el puerto especificado (por defecto, el pu
 
 ## Endpoints
 
-### GET /api/products
+### GET /api/productos
 
 Devuelve todos los productos.
 
-### GET /api/products/:id
+### GET /api/products/:codigo
 
-Devuelve un producto por su ID.
+Devuelve un producto por su código(id).
 
-### POST /api/products
+### GET /api/productos/nombre/:nombre
 
-Crea un nuevo producto.
+Devuelve los productos que coinciden con el nombre especificado (búsqueda parcial).
 
-```json
-{
-  "codigo": 1,
-  "nombre": "Producto Ejemplo",
-  "precio": 99.99,
-  "categorias": ["Categoria1", "Categoria2"]
-}
-```
+### POST /api/productos
 
-### PUT /api/products/:id
-
-Actualiza un producto existente.
-
-### PATCH /api/products/:id/precio
-
-Actualiza el precio de un producto.
+Crear/Agregar un nuevo producto.
 
 ```json
 {
-  "precio": 109.99
+  "nombre": "Auriculares Gaming",
+  "precio": 29.99,
+  "categoria": "Accesorios"
 }
 ```
 
-### DELETE /api/products/:id
+### PATCH /api/productos/:codigo
 
-Elimina un producto por su ID.
+Actualizar/Modificar el precio de un producto por su código(id).
 
-### GET /api/products/search?nombre={nombre}
+```json
+{
+  "precio": 39.99
+}
+```
 
-Filtra productos por nombre, utiliza params.
+### DELETE /api/productos/:codigo
+
+Eliminar un producto por su código(id).
+
+## Fechas Importantes
+
+- **Avance del Proyecto**: 11 de julio de 2024
+  - Tener todos los endpoints básicos, el control de rutas inexistentes, la conexión con MongoDB y los métodos GET funcionando.
+
+- **Presentación Final**: 30 de julio de 2024
+  - Proyecto 100% funcional.
 
 ## Contribuciones
 
