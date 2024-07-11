@@ -40,7 +40,7 @@ app.get('/productos/:codigo', (req, res) => {
 app.get('/productos/nombre/:nombre', async (req, res) => {
     const { nombre } = req.params
     try {
-        const producto = await Productos.find({ nombre: new RegExp(nombre, "i"), }); 
+        const producto = await Productos.find({ nombre: new RegExp(nombre, "i"), })
         producto ? res.json(producto) : res.status(404).json({ message: "Error al obtener el producto, compruebe si el nombre ingresado está vacío o es incorrecto!."})   
     } catch (error) {
         res.status(500).json({ message: "Error en la búsqueda por nombre." })
@@ -51,11 +51,9 @@ app.get('/productos/nombre/:nombre', async (req, res) => {
 // Crear/Agregar un nuevo producto  
 app.post('/productos', async (req, res) => {
     try {
-        // Contar la cantidad de códigos que hay en la BD
-        // y sumarle uno para generar el nuevo código al producto creado.
+        // Contar la cantidad de códigos que hay en la BD y sumarle uno para generar el nuevo código al producto creado.
         const total = await Productos.countDocuments(req.params.codigo)
         const nuevoCodigo = total + 1
-        
         const nuevoProducto = new Productos({...req.body, codigo: nuevoCodigo })
         const guardarProducto = await nuevoProducto.save()
         res.status(201).json(guardarProducto)
@@ -71,7 +69,7 @@ app.patch('/productos/:codigo', async (req, res) => {
             req.params,
             { precio: req.body.precio },
             { new: true }
-        );
+        )
         if (!actualizarProducto) {
             return res.status(404).json({ message: 'Producto no encontrado!' })
         }

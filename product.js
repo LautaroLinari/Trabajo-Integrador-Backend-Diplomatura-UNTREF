@@ -6,8 +6,8 @@ const productosSchema = new mongoose.Schema({
     nombre: String,
     precio: Number,
     categoria: String,
-
   })
-  const Productos = mongoose.model('Product', productosSchema)
+  // Exportar el modelo de Productos para usarlo en otros archivos
+const Productos = mongoose.model('Product', productosSchema)
 
 module.exports = Productos
