@@ -29,46 +29,40 @@ app.get('/productos/:codigo', (req, res) => {
     Productos.findOne(query)
      .then((producto) => {
         if (producto) return res.json(producto)
-        res.status(404).json({ message: 'Producto no encontrado por ese Codigo!' })
+        res.status(404).json({ message: 'Producto no encontrado por ese código!' })
     })
      .catch(() => {
-        res.status(500).json({ message: 'Error al obtener el producto, compruebe si el codigo ingresado es correcto!' })
+        res.status(500).json({ message: 'Error al obtener el producto, compruebe si el código ingresado es correcto!' })
     })
 })
 
 //Devuelve los productos que coinciden con el nombre especificado (búsqueda parcial).
 app.get('/productos/nombre/:nombre', async (req, res) => {
     const { nombre } = req.params
-    const query = { nombre: { $regex: nombre, $options: 'i' } }
-    const productos = await Productos.find(query)
-    .then((producto) => {
-        if(producto){
-            res.json(producto)
-        } else{
-            res.status(404).json({ message: 'Producto no encontrado por ese Nombre!' })
-        }
-    })
-    .catch(() => {
-        res.status(500).json({ message: 'Error al obtener el producto, compruebe si el nombre ingresado está vacío o es incorrecto!' })
-    })
+    try {
+        const producto = await Productos.find({ nombre: new RegExp(nombre, "i"), }); 
+        producto ? res.json(producto) : res.status(404).json({ message: "Error al obtener el producto, compruebe si el nombre ingresado está vacío o es incorrecto!."})   
+    } catch (error) {
+        res.status(500).json({ message: "Error en la búsqueda por nombre." })
+    }
+
   })
 
-// Crear/Agregar un nuevo producto
+// Crear/Agregar un nuevo producto  
 app.post('/productos', async (req, res) => {
-    //Funcion para generar numero aleatorio mayor a 30(cantidad de productos) y menor que 100
-    function getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min) + min);
-      }
-    const nuevoProducto = new Productos({...req.body, codigo: getRandomInt(30, 100)});
     try {
-        const guardarProducto = await nuevoProducto.save();
-        res.status(201).json(guardarProducto);
+        // Contar la cantidad de códigos que hay en la BD
+        // y sumarle uno para generar el nuevo código al producto creado.
+        const total = await Productos.countDocuments(req.params.codigo)
+        const nuevoCodigo = total + 1
+        
+        const nuevoProducto = new Productos({...req.body, codigo: nuevoCodigo })
+        const guardarProducto = await nuevoProducto.save()
+        res.status(201).json(guardarProducto)
     } catch (error) {
-        return res.status(400).json({ message: 'Error al agregar/crear un producto!' });
+        return res.status(500).json({ message: 'Error al crear el producto!' })
     }
-});
+})
 
 // Actualizar/Modificar el precio de un producto
 app.patch('/productos/:codigo', async (req, res) => {
@@ -79,32 +73,31 @@ app.patch('/productos/:codigo', async (req, res) => {
             { new: true }
         );
         if (!actualizarProducto) {
-            return res.status(404).json({ message: 'Producto no encontrado!' });
+            return res.status(404).json({ message: 'Producto no encontrado!' })
         }
-        res.json(actualizarProducto);
+        res.json(actualizarProducto)
     } catch (error) {
-        res.status(400).json({ message: 'Error al modificar/actualizar el precio del producto seleccionado!' });
+        res.status(500).json({ message: 'Error al modificar el precio del producto seleccionado!' })
     }
 })
 
 //Borrar un producto
 app.delete('/productos/:codigo', async (req, res) => {
     try {
-        const borrarProducto = await Productos.findOneAndDelete(req.params);
+        const borrarProducto = await Productos.findOneAndDelete(req.params)
         if (!borrarProducto) {
-            return res.status(404).json({ message: 'Producto no encontrado!' });
+            return res.status(404).json({ message: 'Producto no encontrado!' })
         }
-        res.json({ message: 'Producto eliminado con éxito!' });
+        res.json({ message: 'Producto eliminado con éxito!' })
     } catch (error) {
-        res.status(500).json({ message: 'Error al eliminar el producto seleccionado!' });
+        res.status(500).json({ message: 'Error al eliminar el producto seleccionado!' })
     }
 })
-
 
 //Conectarse a la base de datos
 connectDB();
 
 //Escucha del Puerto/Servidor
 app.listen(port, () => {
-    console.log(`Example app listening on http://localhost:${port}`)
+    console.log(`App corriendo en: http://localhost:${port}`)
 })

@@ -32,7 +32,7 @@ Antes de comenzar, asegúrate de tener instalados los siguientes componentes:
 
    - Crea una base de datos en MongoDB.
    - Configura la URI de MongoDB en el archivo `database.js`.
-   - En este caso usare el dataset de `computacion.json`.
+   - En este caso usar el dataset de `computacion.json`.
 
 ## Ejecución
 
