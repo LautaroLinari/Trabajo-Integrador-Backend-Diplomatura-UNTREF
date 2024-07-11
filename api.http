@@ -8,7 +8,7 @@ GET http://localhost:3000/productos
 GET http://localhost:3000/productos/id/6679d7a9988c9105ee1e2b4c
 
 ### Devuelve los productos que coinciden con el nombre especificado (búsqueda parcial).
-GET http://localhost:3000/productos/nombre/mon
+GET http://localhost:3000/productos/nombre/Moni
 
 ### Crear/Agregar un nuevo producto
 POST http://localhost:3000/productos/
@@ -29,4 +29,7 @@ Content-Type: application/json
 }
 
 ### Borrar un producto
-DELETE http://localhost:3000/productos/66905ecc3881edb4699cb1be
+DELETE http://localhost:3000/productos/66905f6e55bb4fc3595ea5cb
+
+### Error por ruta inexistente
+GET http://localhost:3000/productos/computacion

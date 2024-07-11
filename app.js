@@ -100,6 +100,11 @@ app.delete('/productos/:id', async (req, res) => {
     }
 })
 
+//Si la ruta no coincide con ninguna de las anteriores, responde con un mensaje de error 404.
+app.use((req, res) => {
+    res.status(404).json({ message: 'Ruta no encontrada!' })  
+})
+
 //Conectarse a la base de datos
 connectDB();
 
