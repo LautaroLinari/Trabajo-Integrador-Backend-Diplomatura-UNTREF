@@ -46,7 +46,7 @@ Esto iniciará el servidor Express en el puerto especificado (por defecto, el pu
 
 ## Endpoints
 
-### http://localhost:3000/productos
+### GET /api/productos
 
 Devuelve todos los productos.
 
