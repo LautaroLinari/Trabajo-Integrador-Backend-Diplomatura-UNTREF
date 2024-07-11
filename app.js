@@ -37,8 +37,7 @@ app.get('/productos/id/:id', async (req, res) => {
       console.error('Error al obtener ese producto:', err)
       res.status(500).json({ message: 'Error interno en el servidor!.' })
     }
-  })
-
+})
 
 //Devuelve los productos que coinciden con el nombre especificado (búsqueda parcial).
 app.get('/productos/nombre/:nombre', async (req, res) => {
@@ -49,7 +48,6 @@ app.get('/productos/nombre/:nombre', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Error en la búsqueda por nombre." })
     }
-
   })
 
 // Crear/Agregar un nuevo producto  

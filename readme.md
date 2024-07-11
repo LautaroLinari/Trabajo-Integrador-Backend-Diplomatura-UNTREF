@@ -50,7 +50,7 @@ Esto iniciará el servidor Express en el puerto especificado (por defecto, el pu
 
 Devuelve todos los productos.
 
-### GET /api/products/:id
+### GET /api/products/id/:id
 
 Devuelve un producto por su ID.
 
