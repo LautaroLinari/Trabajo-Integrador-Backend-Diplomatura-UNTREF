@@ -46,13 +46,13 @@ Esto iniciará el servidor Express en el puerto especificado (por defecto, el pu
 
 ## Endpoints
 
-### GET /api/productos
+### http://localhost:3000/productos
 
 Devuelve todos los productos.
 
 ### GET /api/products/:codigo
 
-Devuelve un producto por su código(id).
+Devuelve un producto por su código (id).
 
 ### GET /api/productos/nombre/:nombre
 
@@ -72,7 +72,7 @@ Crear/Agregar un nuevo producto.
 
 ### PATCH /api/productos/:codigo
 
-Actualizar/Modificar el precio de un producto por su código(id).
+Actualizar/Modificar el precio de un producto por su código (id).
 
 ```json
 {
@@ -82,7 +82,7 @@ Actualizar/Modificar el precio de un producto por su código(id).
 
 ### DELETE /api/productos/:codigo
 
-Eliminar un producto por su código(id).
+Eliminar un producto por su código (id).
 
 ## Fechas Importantes
 

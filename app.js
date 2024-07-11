@@ -4,8 +4,6 @@ const connectDB = require('./database.js');
 const port = process.env.PORT ?? 3000
 const Productos = require('./product.js')
 
-
-
 //Middleware
 app.use(express.json())
 

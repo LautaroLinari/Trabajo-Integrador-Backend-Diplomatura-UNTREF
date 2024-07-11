@@ -8,7 +8,7 @@ GET http://localhost:3000/productos
 GET http://localhost:3000/productos/30
 
 ### Devuelve los productos que coinciden con el nombre especificado (búsqueda parcial).
-GET http://localhost:3000/productos/nombre/Desk
+GET http://localhost:3000/productos/nombre/aur
 
 ### Crear/Agregar un nuevo producto
 POST http://localhost:3000/productos/
