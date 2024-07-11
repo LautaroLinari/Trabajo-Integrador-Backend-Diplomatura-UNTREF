@@ -22,19 +22,23 @@ app.get('/productos', async (req, res) => {
     }
 })
 
-//Obtener un producto por su ID (codigo).
-app.get('/productos/:codigo', (req, res) => {
-    const { codigo } = req.params
-    const query = { codigo: codigo }
-    Productos.findOne(query)
-     .then((producto) => {
-        if (producto) return res.json(producto)
-        res.status(404).json({ message: 'Producto no encontrado por ese código!' })
-    })
-     .catch(() => {
-        res.status(500).json({ message: 'Error al obtener el producto, compruebe si el código ingresado es correcto!' })
-    })
-})
+//Obtener un producto por su ID.
+app.get('/productos/id/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+      if (!id) {
+        res.status(400).json({ message: 'Error, no ingreso ningún ID.' })
+        return
+      }
+      const producto = await Productos.findById(id)
+      if (producto) return res.status(200).json({ message: 'Producto encontrado!.', producto })
+      res.status(404).json({ message: 'Producto no encontrado por ese ID!.' })
+    } catch (err) {
+      console.error('Error al obtener ese producto:', err)
+      res.status(500).json({ message: 'Error interno en el servidor!.' })
+    }
+  })
+
 
 //Devuelve los productos que coinciden con el nombre especificado (búsqueda parcial).
 app.get('/productos/nombre/:nombre', async (req, res) => {
@@ -63,32 +67,38 @@ app.post('/productos', async (req, res) => {
 })
 
 // Actualizar/Modificar el precio de un producto
-app.patch('/productos/:codigo', async (req, res) => {
+app.patch('/productos/:id', async (req, res) => {
+    const { id } = req.params
     try {
-        const actualizarProducto = await Productos.findOneAndUpdate(
-            req.params,
-            { precio: req.body.precio },
-            { new: true }
-        )
-        if (!actualizarProducto) {
-            return res.status(404).json({ message: 'Producto no encontrado!' })
-        }
-        res.json(actualizarProducto)
-    } catch (error) {
-        res.status(500).json({ message: 'Error al modificar el precio del producto seleccionado!' })
+      if (!id) {
+        res.status(400).json({ message: 'Error, el ID ingresado es invalido!.' })
+        return
+      }
+      const producto = await Productos.findByIdAndUpdate(id, req.body, { new: true })
+      producto
+        ? res.status(200).json({ message: 'Producto actualizado con éxito!.', producto })
+        : res.status(404).json({ message: 'No se encontró el producto con ese ID!.' })
+    } catch (err) {
+      console.error('Error al obtener producto por ID:', err)
+      res.status(500).json({ message: 'Error interno en el servidor!.' })
     }
 })
 
 //Borrar un producto
-app.delete('/productos/:codigo', async (req, res) => {
+app.delete('/productos/:id', async (req, res) => {
+    const { id } = req.params
     try {
-        const borrarProducto = await Productos.findOneAndDelete(req.params)
-        if (!borrarProducto) {
-            return res.status(404).json({ message: 'Producto no encontrado!' })
-        }
-        res.json({ message: 'Producto eliminado con éxito!' })
-    } catch (error) {
-        res.status(500).json({ message: 'Error al eliminar el producto seleccionado!' })
+      if (!id) {
+        res.status(400).json({ message: 'Error, el ID ingresado es invalido!.' })
+        return
+      }
+      const productoAeliminar = await Productos.findByIdAndDelete(id)
+      productoAeliminar
+        ? res.status(204).json({ message: 'Producto eliminado con éxito!.' })
+        : res.status(404).json({ message: 'No se encontró el producto por ese ID para eliminar!.' })
+    } catch (err) {
+      console.error('Error al eliminar el producto:', err)
+      res.status(500).json({ message: 'Error interno en el servidor!.' })
     }
 })
 

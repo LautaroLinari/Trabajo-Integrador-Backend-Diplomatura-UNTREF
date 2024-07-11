@@ -50,9 +50,9 @@ Esto iniciará el servidor Express en el puerto especificado (por defecto, el pu
 
 Devuelve todos los productos.
 
-### GET /api/products/:codigo
+### GET /api/products/:id
 
-Devuelve un producto por su código (id).
+Devuelve un producto por su ID.
 
 ### GET /api/productos/nombre/:nombre
 
@@ -70,9 +70,9 @@ Crear/Agregar un nuevo producto.
 }
 ```
 
-### PATCH /api/productos/:codigo
+### PATCH /api/productos/:id
 
-Actualizar/Modificar el precio de un producto por su código (id).
+Actualizar/Modificar el precio de un producto por su ID.
 
 ```json
 {
@@ -80,9 +80,9 @@ Actualizar/Modificar el precio de un producto por su código (id).
 }
 ```
 
-### DELETE /api/productos/:codigo
+### DELETE /api/productos/:id
 
-Eliminar un producto por su código (id).
+Eliminar un producto por su ID.
 
 ## Fechas Importantes
 
