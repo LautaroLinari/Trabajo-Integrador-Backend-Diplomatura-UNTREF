@@ -76,7 +76,7 @@ Actualizar/Modificar el precio de un producto por su ID.
 
 ```json
 {
-  "precio": 39.99
+  "precio": 49.99
 }
 ```
 

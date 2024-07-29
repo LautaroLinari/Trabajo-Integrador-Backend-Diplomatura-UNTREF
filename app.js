@@ -31,10 +31,9 @@ app.get('/productos/id/:id', async (req, res) => {
         return
       }
       const producto = await Productos.findById(id)
-      if (producto) return res.status(200).json({ message: 'Producto encontrado!.', producto })
-      res.status(404).json({ message: 'Producto no encontrado por ese ID!.' })
+      if (producto) return res.status(200).json(producto)
+      res.status(404).json({ message: 'Producto no encontrado por este Id!.' })
     } catch (err) {
-      console.error('Error al obtener ese producto:', err)
       res.status(500).json({ message: 'Error interno en el servidor!.' })
     }
 })
@@ -60,7 +59,7 @@ app.post('/productos', async (req, res) => {
         const guardarProducto = await nuevoProducto.save()
         res.status(201).json(guardarProducto)
     } catch (error) {
-        return res.status(500).json({ message: 'Error al crear el producto!' })
+        return res.status(500).json({ message: 'Error en la creación del producto!' })
     }
 })
 
@@ -69,16 +68,15 @@ app.patch('/productos/:id', async (req, res) => {
     const { id } = req.params
     try {
       if (!id) {
-        res.status(400).json({ message: 'Error, el ID ingresado es invalido!.' })
+        res.status(400).json({ message: 'Error, el Id es invalido!' })
         return
       }
       const producto = await Productos.findByIdAndUpdate(id, req.body, { new: true })
       producto
-        ? res.status(200).json({ message: 'Producto actualizado con éxito!.', producto })
-        : res.status(404).json({ message: 'No se encontró el producto con ese ID!.' })
+        ? res.status(200).json({ message: 'El producto fue actualizado con éxito!', producto })
+        : res.status(404).json({ message: 'No se encontró el producto con este Id!' })
     } catch (err) {
-      console.error('Error al obtener producto por ID:', err)
-      res.status(500).json({ message: 'Error interno en el servidor!.' })
+      res.status(500).json({ message: 'Error en el servidor!' })
     }
 })
 
@@ -87,22 +85,21 @@ app.delete('/productos/:id', async (req, res) => {
     const { id } = req.params
     try {
       if (!id) {
-        res.status(400).json({ message: 'Error, el ID ingresado es invalido!.' })
+        res.status(400).json({ message: 'Error, el Id ingresado es invalido!' })
         return
       }
       const productoAeliminar = await Productos.findByIdAndDelete(id)
       productoAeliminar
-        ? res.status(204).json({ message: 'Producto eliminado con éxito!.' })
-        : res.status(404).json({ message: 'No se encontró el producto por ese ID para eliminar!.' })
+        ? res.status(204).json({ message: 'El producto ha sido eliminado!' })
+        : res.status(404).json({ message: 'No se encontró el producto por este Id para eliminar!' })
     } catch (err) {
-      console.error('Error al eliminar el producto:', err)
-      res.status(500).json({ message: 'Error interno en el servidor!.' })
+      res.status(500).json({ message: 'Error en el servidor!' })
     }
 })
 
 //Si la ruta no coincide con ninguna de las anteriores, responde con un mensaje de error 404.
 app.use((req, res) => {
-    res.status(404).json({ message: 'Ruta no encontrada!' })  
+    res.status(404).json({ message: 'Ruta Inexistente!' })  
 })
 
 //Conectarse a la base de datos

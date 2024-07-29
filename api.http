@@ -8,7 +8,7 @@ GET http://localhost:3000/productos
 GET http://localhost:3000/productos/id/6679d7a9988c9105ee1e2b4c
 
 ### Devuelve los productos que coinciden con el nombre especificado (búsqueda parcial).
-GET http://localhost:3000/productos/nombre/Moni
+GET http://localhost:3000/productos/nombre/Mon
 
 ### Crear/Agregar un nuevo producto
 POST http://localhost:3000/productos/
@@ -25,7 +25,7 @@ PATCH http://localhost:3000/productos/6679d7a9988c9105ee1e2b50
 Content-Type: application/json
 
 {
-  "precio": 59.99
+  "precio": 49.99
 }
 
 ### Borrar un producto
