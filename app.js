@@ -57,9 +57,13 @@ app.post('/productos', async (req, res) => {
         const nuevoCodigo = total + 1
         const nuevoProducto = new Productos({...req.body, codigo: nuevoCodigo })
         const guardarProducto = await nuevoProducto.save()
-        res.status(201).json(guardarProducto)
+        if (guardarProducto) {
+          res.status(201).json(guardarProducto)
+        } else {
+          res.status(400).json({message: 'Error en la creación del producto!'})
+        }
     } catch (error) {
-        return res.status(500).json({ message: 'Error en la creación del producto!' })
+        return res.status(500).json({ message: 'Error en el servidor!' })
     }
 })
 
@@ -72,9 +76,7 @@ app.patch('/productos/:id', async (req, res) => {
         return
       }
       const producto = await Productos.findByIdAndUpdate(id, req.body, { new: true })
-      producto
-        ? res.status(200).json({ message: 'El producto fue actualizado con éxito!', producto })
-        : res.status(404).json({ message: 'No se encontró el producto con este Id!' })
+      producto ? res.status(200).json(producto) : res.status(404).json({ message: 'No se encontró el producto con este Id!' })
     } catch (err) {
       res.status(500).json({ message: 'Error en el servidor!' })
     }
@@ -84,14 +86,11 @@ app.patch('/productos/:id', async (req, res) => {
 app.delete('/productos/:id', async (req, res) => {
     const { id } = req.params
     try {
-      if (!id) {
-        res.status(400).json({ message: 'Error, el Id ingresado es invalido!' })
-        return
-      }
       const productoAeliminar = await Productos.findByIdAndDelete(id)
-      productoAeliminar
-        ? res.status(204).json({ message: 'El producto ha sido eliminado!' })
-        : res.status(404).json({ message: 'No se encontró el producto por este Id para eliminar!' })
+      if (!productoAeliminar) {
+        return res.status(404).json({ message: 'No se encontró el producto con este Id!' })
+      }
+        res.json({ message: 'El producto ha sido eliminado!' })
     } catch (err) {
       res.status(500).json({ message: 'Error en el servidor!' })
     }
